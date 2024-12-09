@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboHack Team</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">RoboHack</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+            </ul>
+            <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Welcome to RoboHack</h1>
+            <p>We are a team of passionate robotics enthusiasts pushing the boundaries of innovation.</p>
+            <a href="#projects" class="cta-button">Explore Our Projects</a>
+        </section>
+
+        <section id="projects">
+            <h2>Our Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" tabindex="0">
+                    <h3>Autonomous Drone</h3>
+                    <p>A self-navigating drone for search and rescue operations.</p>
+                    <div class="project-details">
+                        <p>Our autonomous drone uses advanced AI algorithms to navigate complex environments and identify potential rescue targets.</p>
+                        <ul>
+                            <li>4K camera with night vision</li>
+                            <li>6-hour flight time</li>
+                            <li>Real-time data transmission</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card" tabindex="0">
+                    <h3>Robotic Arm</h3>
+                    <p>Precision-controlled robotic arm for industrial applications.</p>
+                    <div class="project-details">
+                        <p>This robotic arm combines high precision with adaptability, making it suitable for a wide range of industrial tasks.</p>
+                        <ul>
+                            <li>6 degrees of freedom</li>
+                            <li>0.1mm positioning accuracy</li>
+                            <li>Modular end-effectors</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="project-card" tabindex="0">
+                    <h3>Smart Home Robot</h3>
+                    <p>AI-powered robot for household tasks and assistance.</p>
+                    <div class="project-details">
+                        <p>Our smart home robot uses natural language processing and computer vision to interact with users and perform various household tasks.</p>
+                        <ul>
+                            <li>Voice and gesture control</li>
+                            <li>Integrated smart home hub</li>
+                            <li>Autonomous navigation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events">
+            <h2>Upcoming Events</h2>
+            <div id="event-list">
+                <!-- Events will be dynamically added here -->
+            </div>
+        </section>
+
+        <section id="achievements">
+            <h2>Our Achievements</h2>
+            <div class="achievement-timeline">
+                <!-- Achievements will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 RoboHack Team. All rights reserved.</p>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const events = [
+        { name: 'RoboHack 2023', date: 'October 15-17, 2023', description: 'Annual robotics hackathon' },
+        { name: 'AI in Robotics Workshop', date: 'November 5, 2023', description: 'Learn about the latest AI applications in robotics' },
+        { name: 'Winter Robotics Showcase', date: 'December 10, 2023', description: 'Demonstrate your projects to industry professionals' }
+    ];
+
+    const achievements = [
+        { title: '1st Place - National Robotics Challenge 2023', date: 'July 2023' },
+        { title: 'Best Innovation Award - TechCon 2022', date: 'November 2022' },
+        { title: 'Finalist - International Robotics Olympiad 2021', date: 'September 2021' }
+    ];
+
+    const eventList = document.getElementById('event-list');
+    const achievementTimeline = document.querySelector('.achievement-timeline');
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    // Populate events
+    events.forEach(event => {
+        const eventCard = document.createElement('div');
+        eventCard.className = 'event-card';
+        eventCard.innerHTML = `
+            <h3>${event.name}</h3>
+            <p>${event.date}</p>
+            <p>${event.description}</p>
+        `;
+        eventList.appendChild(eventCard);
+    });
+
+    // Populate achievements
+    achievements.forEach(achievement => {
+        const achievementItem = document.createElement('div');
+        achievementItem.className = 'achievement-item';
+        achievementItem.innerHTML = `
+            <h3>${achievement.title}</h3>
+            <p>${achievement.date}</p>
+        `;
+        achievementTimeline.appendChild(achievementItem);
+    });
+
+    // Dark mode toggle
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const icon = darkModeToggle.querySelector('i');
+        icon.classList.toggle('fa-moon');
+        icon.classList.toggle('fa-sun');
+    });
+
+    // Project card interactivity
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const details = card.querySelector('.project-details');
+            details.classList.toggle('active');
+        });
+
+        card.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const details = card.querySelector('.project-details');
+                details.classList.toggle('active');
+            }
+        });
+    });
+
+    // Scroll animation
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
+
+
+    </script>
+
+
+</body>
+</html>
